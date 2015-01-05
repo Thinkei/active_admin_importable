@@ -11,11 +11,10 @@ class CsvSidekiqDb
 
   def convert_save(target_model, csv_file, &block)
     broadcast(:before_all, csv_file)
-    dest = Rails.root.join("tmp/#{Time.now.to_i}_#{Process.pid}").to_s
 
-    FileUtils.cp(csv_file.path, dest)
+    file = TmpFile.create(file: csv_file)
 
-    CsvSidekiqWorker.perform_async(dest, target_model, line_saver)
+    CsvSidekiqWorker.perform_async(file.id, target_model, line_saver)
 
     broadcast(:after_all, csv_file)
   end

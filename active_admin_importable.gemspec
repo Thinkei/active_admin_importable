@@ -16,4 +16,5 @@ Gem::Specification.new do |gem|
   gem.version       = ActiveAdminImportable::VERSION
 
   gem.add_dependency('wisper')
+  gem.add_dependency('carrierwave-postgresql')
 end
